@@ -36,8 +36,10 @@ class BackendOnnxruntime(backend.Backend):
 
         # self.sess = rt.InferenceSession(model_path, opt)
         if len(rt.get_all_providers()) > 1 and os.environ.get("USE_GPU", "yes").lower() not in [ "0", "false", "off", "no" ]:
+            print("USE CUDA.....")
             self.sess = rt.InferenceSession(model_path, opt, providers=["CUDAExecutionProvider"])
         else:
+            print("USE CPU.....")
             self.sess = rt.InferenceSession(model_path, opt, providers=["CPUExecutionProvider"])
             
         # get input and output names
